@@ -119,29 +119,29 @@ const ResumeAnalysis: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-gray-800 mb-2">AI Resume Analysis</h1>
-      <p className="text-gray-500 mb-8">Upload your resume and the job description to get an instant ATS score and improvement tips.</p>
+      <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">AI Resume Analysis</h1>
+      <p className="text-gray-500 dark:text-slate-400 mb-8">Upload your resume and the job description to get an instant ATS score and improvement tips.</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         {/* Input Section */}
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2"><i className="fas fa-file-upload text-primary"></i> Upload Resume</h3>
-            <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-primary transition-colors bg-gray-50">
+          <div className="bg-white dark:bg-black/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-gray-200 dark:border-slate-800">
+            <h3 className="font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2"><i className="fas fa-file-upload text-primary"></i> Upload Resume</h3>
+            <div className="border-2 border-dashed border-gray-300 dark:border-slate-700 rounded-xl p-8 text-center hover:border-primary dark:hover:border-primary transition-colors bg-gray-50 dark:bg-slate-800/50">
               <input type="file" accept=".pdf,.txt" onChange={handleFileUpload} className="hidden" id="resume-upload" />
               <label htmlFor="resume-upload" className="cursor-pointer block">
-                <i className="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
-                <p className="text-gray-600 font-medium">{fileName || "Click to upload PDF or Text file"}</p>
-                <p className="text-xs text-gray-400 mt-2">Supported formats: PDF, TXT</p>
+                <i className="fas fa-cloud-upload-alt text-4xl text-gray-400 dark:text-slate-500 mb-3"></i>
+                <p className="text-gray-600 dark:text-slate-300 font-medium">{fileName || "Click to upload PDF or Text file"}</p>
+                <p className="text-xs text-gray-400 dark:text-slate-500 mt-2">Supported formats: PDF, TXT</p>
               </label>
             </div>
             {resumeText && <p className="text-green-600 text-sm mt-3"><i className="fas fa-check-circle"></i> Resume text extracted successfully</p>}
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-            <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2"><i className="fas fa-briefcase text-primary"></i> Job Description</h3>
+          <div className="bg-white dark:bg-black/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-gray-200 dark:border-slate-800">
+            <h3 className="font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2"><i className="fas fa-briefcase text-primary"></i> Job Description</h3>
             <textarea 
-              className="w-full h-48 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none text-sm"
+              className="w-full h-48 p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none text-sm bg-white dark:bg-slate-950 dark:text-white dark:placeholder-slate-500"
               placeholder="Paste the job description here..."
               value={jobDesc}
               onChange={(e) => setJobDesc(e.target.value)}
@@ -158,37 +158,37 @@ const ResumeAnalysis: React.FC = () => {
         </div>
 
         {/* Results Section */}
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200 min-h-[500px]">
+        <div className="bg-white dark:bg-black/80 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 min-h-[500px]">
           {!result ? (
-            <div className="h-full flex flex-col items-center justify-center text-gray-400 opacity-50">
+            <div className="h-full flex flex-col items-center justify-center text-gray-400 dark:text-slate-600 opacity-50">
               <i className="fas fa-chart-pie text-6xl mb-4"></i>
               <p>Analysis results will appear here</p>
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="flex items-center justify-between border-b border-gray-100 pb-6">
+              <div className="flex items-center justify-between border-b border-gray-100 dark:border-slate-800 pb-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-800">Match Score</h2>
-                  <p className="text-gray-500 text-sm">Based on keywords & skills</p>
+                  <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Match Score</h2>
+                  <p className="text-gray-500 dark:text-slate-400 text-sm">Based on keywords & skills</p>
                 </div>
                 <div className={`text-5xl font-extrabold ${result.score >= 70 ? 'text-green-600' : result.score >= 50 ? 'text-yellow-500' : 'text-red-500'}`}>
                   {result.score}%
                 </div>
               </div>
 
-              <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                <h4 className="font-bold text-blue-800 mb-2"><i className="fas fa-info-circle mr-2"></i>Summary</h4>
-                <p className="text-blue-900 text-sm leading-relaxed">{result.summary}</p>
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800">
+                <h4 className="font-bold text-blue-800 dark:text-blue-300 mb-2"><i className="fas fa-info-circle mr-2"></i>Summary</h4>
+                <p className="text-blue-900 dark:text-blue-200 text-sm leading-relaxed">{result.summary}</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div><h4 className="font-bold text-green-700 mb-2"><i className="fas fa-check mr-2"></i>Strengths</h4><ul className="list-disc list-inside text-sm text-gray-600 space-y-1">{result.strengths?.map((s: string, i: number) => <li key={i}>{s}</li>)}</ul></div>
-                <div><h4 className="font-bold text-red-600 mb-2"><i className="fas fa-exclamation-triangle mr-2"></i>Weaknesses</h4><ul className="list-disc list-inside text-sm text-gray-600 space-y-1">{result.weaknesses?.map((s: string, i: number) => <li key={i}>{s}</li>)}</ul></div>
+                <div><h4 className="font-bold text-green-700 dark:text-green-400 mb-2"><i className="fas fa-check mr-2"></i>Strengths</h4><ul className="list-disc list-inside text-sm text-gray-600 dark:text-slate-300 space-y-1">{result.strengths?.map((s: string, i: number) => <li key={i}>{s}</li>)}</ul></div>
+                <div><h4 className="font-bold text-red-600 dark:text-red-400 mb-2"><i className="fas fa-exclamation-triangle mr-2"></i>Weaknesses</h4><ul className="list-disc list-inside text-sm text-gray-600 dark:text-slate-300 space-y-1">{result.weaknesses?.map((s: string, i: number) => <li key={i}>{s}</li>)}</ul></div>
               </div>
 
-              <div><h4 className="font-bold text-orange-600 mb-2"><i className="fas fa-key mr-2"></i>Missing Keywords</h4><div className="flex flex-wrap gap-2">{result.missingKeywords?.map((k: string, i: number) => <span key={i} className="bg-orange-50 text-orange-700 px-3 py-1 rounded-full text-xs font-medium border border-orange-100">{k}</span>)}</div></div>
+              <div><h4 className="font-bold text-orange-600 dark:text-orange-400 mb-2"><i className="fas fa-key mr-2"></i>Missing Keywords</h4><div className="flex flex-wrap gap-2">{result.missingKeywords?.map((k: string, i: number) => <span key={i} className="bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 px-3 py-1 rounded-full text-xs font-medium border border-orange-100 dark:border-orange-800">{k}</span>)}</div></div>
 
-              <div><h4 className="font-bold text-purple-700 mb-2"><i className="fas fa-lightbulb mr-2"></i>Improvement Tips</h4><ul className="space-y-2">{result.improvementTips?.map((tip: string, i: number) => <li key={i} className="flex items-start gap-2 text-sm text-gray-700"><i className="fas fa-angle-right text-purple-400 mt-1"></i><span>{tip}</span></li>)}</ul></div>
+              <div><h4 className="font-bold text-purple-700 dark:text-purple-400 mb-2"><i className="fas fa-lightbulb mr-2"></i>Improvement Tips</h4><ul className="space-y-2">{result.improvementTips?.map((tip: string, i: number) => <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-slate-300"><i className="fas fa-angle-right text-purple-400 mt-1"></i><span>{tip}</span></li>)}</ul></div>
             </div>
           )}
         </div>

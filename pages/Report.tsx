@@ -27,10 +27,10 @@ const ScoreCircle: React.FC<{ score: string; label: string }> = ({ score, label 
           </PieChart>
         </ResponsiveContainer>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-xl font-bold text-gray-700">{score}</span>
+          <span className="text-xl font-bold text-gray-700 dark:text-slate-200">{score}</span>
         </div>
       </div>
-      <span className="mt-2 font-medium text-gray-600">{label}</span>
+      <span className="mt-2 font-medium text-gray-600 dark:text-slate-400">{label}</span>
     </div>
   );
 };
@@ -191,11 +191,11 @@ const InterviewReport: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto pb-10">
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 mb-8">
+      <div className="bg-white dark:bg-black/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100 dark:border-slate-800 p-8 mb-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b pb-4 mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-primary-dark">{report.jobTitle}</h2>
-            <div className="flex items-center gap-2 mt-1 text-gray-500">
+            <h2 className="text-2xl font-bold text-primary-dark dark:text-blue-400">{report.jobTitle}</h2>
+            <div className="flex items-center gap-2 mt-1 text-gray-500 dark:text-slate-400">
               <span>Candidate: {report.candidateName}</span>
               <span className="hidden md:inline">|</span>
               <div className="flex items-center gap-2">
@@ -221,19 +221,19 @@ const InterviewReport: React.FC = () => {
           <div className="flex gap-2 mt-4 md:mt-0">
             <button 
               onClick={() => setShowProfile(true)}
-              className="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"
+              className="bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-300 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"
             >
               <i className="fas fa-user-circle"></i> View Profile
             </button>
             <button 
               onClick={handleDownloadPDF}
-              className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors shadow-md"
+              className="bg-primary hover:bg-primary-dark dark:bg-blue-600 dark:hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors shadow-md"
             >
               <i className="fas fa-file-download"></i> Download PDF
             </button>
             <button 
               onClick={() => setSelectedResume(report.candidateResumeURL)}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"
+              className="bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-700 dark:text-slate-300 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors"
             >
               <i className="far fa-file-alt"></i> View Resume
             </button>
@@ -248,11 +248,11 @@ const InterviewReport: React.FC = () => {
         </div>
 
         {/* AI Feedback */}
-        <div className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl border border-gray-200 mb-8 shadow-inner">
-          <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <i className="fas fa-brain text-purple-600"></i> AI Evaluation
+        <div className="bg-gradient-to-br from-gray-50 to-white dark:from-slate-900 dark:to-black p-6 rounded-xl border border-gray-200 dark:border-slate-800 mb-8 shadow-inner">
+          <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+            <i className="fas fa-brain text-purple-600 dark:text-purple-400"></i> AI Evaluation
           </h3>
-          <div className="prose max-w-none text-gray-700 text-sm">
+          <div className="prose max-w-none text-gray-700 dark:text-slate-300 text-sm">
             {formatFeedback(report.feedback)}
           </div>
         </div>
@@ -274,15 +274,15 @@ const InterviewReport: React.FC = () => {
         )}
 
         {/* Q&A Transcript */}
-        <h3 className="text-xl font-bold text-gray-800 mb-6">Detailed Q&A Transcript</h3>
+        <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6">Detailed Q&A Transcript</h3>
         <div className="space-y-6">
           {report.questions.map((q, i) => (
-            <div key={i} className="border border-gray-100 rounded-xl p-6 hover:shadow-md transition-shadow bg-white">
-              <h4 className="font-semibold text-primary mb-2">Question {i + 1}</h4>
-              <p className="mb-4 italic text-gray-800">{q}</p>
+            <div key={i} className="border border-gray-100 dark:border-slate-800 rounded-xl p-6 hover:shadow-md transition-shadow bg-white dark:bg-black/40">
+              <h4 className="font-semibold text-primary dark:text-blue-400 mb-2">Question {i + 1}</h4>
+              <p className="mb-4 italic text-gray-800 dark:text-slate-300">{q}</p>
               
-              <div className="bg-gray-50 p-3 rounded text-sm text-gray-700 font-mono whitespace-pre-wrap">
-                <span className="font-bold text-xs text-gray-400 block mb-1">TRANSCRIPT:</span>
+              <div className="bg-gray-50 dark:bg-slate-900 p-3 rounded text-sm text-gray-700 dark:text-slate-300 font-mono whitespace-pre-wrap">
+                <span className="font-bold text-xs text-gray-400 dark:text-slate-500 block mb-1">TRANSCRIPT:</span>
                 {report.transcriptTexts[i] || "(No transcription available)"}
               </div>
 
@@ -302,7 +302,7 @@ const InterviewReport: React.FC = () => {
       </div>
       
       <div className="text-center">
-        <Link to="/" className="text-gray-500 hover:text-primary">Back to Dashboard</Link>
+        <Link to="/" className="text-gray-500 dark:text-slate-400 hover:text-primary dark:hover:text-blue-400">Back to Dashboard</Link>
       </div>
 
       {/* Video Modal */}
@@ -329,11 +329,11 @@ const InterviewReport: React.FC = () => {
       {selectedResume && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setSelectedResume(null)}>
           <div className="bg-white rounded-lg overflow-hidden max-w-4xl w-full max-h-[90vh] relative shadow-2xl flex flex-col" onClick={e => e.stopPropagation()}>
-            <div className="flex justify-between items-center p-4 border-b bg-gray-50">
-              <h3 className="font-bold text-lg text-gray-800">Candidate Resume</h3>
+            <div className="flex justify-between items-center p-4 border-b bg-gray-50 dark:bg-slate-900 dark:border-slate-800">
+              <h3 className="font-bold text-lg text-gray-800 dark:text-white">Candidate Resume</h3>
               <button 
                 onClick={() => setSelectedResume(null)}
-                className="text-gray-500 hover:text-gray-700 transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200"
+                className="text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-slate-800"
               >
                 <i className="fas fa-times"></i>
               </button>
@@ -348,11 +348,11 @@ const InterviewReport: React.FC = () => {
       {/* Profile Modal (Insta-style) */}
       {showProfile && (
         <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4" onClick={() => setShowProfile(false)}>
-          <div className="bg-white rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+          <div className="bg-white dark:bg-slate-900 rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
             {/* Header */}
-            <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-              <h3 className="font-bold text-lg text-gray-800">Candidate Profile</h3>
-              <button onClick={() => setShowProfile(false)} className="text-gray-500 hover:text-gray-800 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+            <div className="p-4 border-b dark:border-slate-800 flex justify-between items-center sticky top-0 bg-white dark:bg-slate-900 z-10">
+              <h3 className="font-bold text-lg text-gray-800 dark:text-white">Candidate Profile</h3>
+              <button onClick={() => setShowProfile(false)} className="text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
                 <i className="fas fa-times"></i>
               </button>
             </div>
@@ -361,12 +361,12 @@ const InterviewReport: React.FC = () => {
               {/* Insta Header Section */}
               <div className="flex flex-col md:flex-row gap-8 items-center md:items-start mb-10">
                 {/* Avatar */}
-                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-gray-200 p-1 flex-shrink-0">
-                  <div className="w-full h-full rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-gray-200 dark:border-slate-700 p-1 flex-shrink-0">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
                     {profile?.photoURL ? (
                       <img src={profile.photoURL} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
-                      <span className="text-4xl text-gray-300"><i className="fas fa-user"></i></span>
+                      <span className="text-4xl text-gray-300 dark:text-slate-600"><i className="fas fa-user"></i></span>
                     )}
                   </div>
                 </div>
@@ -374,42 +374,42 @@ const InterviewReport: React.FC = () => {
                 {/* Info */}
                 <div className="flex-1 text-center md:text-left w-full">
                   <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
-                    <h2 className="text-2xl font-light text-gray-800">{profile?.displayName || report.candidateName}</h2>
+                    <h2 className="text-2xl font-light text-gray-800 dark:text-white">{profile?.displayName || report.candidateName}</h2>
                     {profile?.location && (
-                       <span className="text-sm text-gray-500"><i className="fas fa-map-marker-alt mr-1"></i> {profile.location}</span>
+                       <span className="text-sm text-gray-500 dark:text-slate-400"><i className="fas fa-map-marker-alt mr-1"></i> {profile.location}</span>
                     )}
                   </div>
                   
                   {/* Stats / Quick Info */}
-                  <div className="flex justify-center md:justify-start gap-8 mb-5 text-sm md:text-base border-t border-b border-gray-100 py-3 md:border-none md:py-0">
+                  <div className="flex justify-center md:justify-start gap-8 mb-5 text-sm md:text-base border-t border-b border-gray-100 dark:border-slate-800 py-3 md:border-none md:py-0">
                     <div className="text-center md:text-left">
                       <span className="font-bold block md:inline md:mr-1">{profile?.skills ? profile.skills.split(',').length : 0}</span>
-                      <span className="text-gray-600">Skills</span>
+                      <span className="text-gray-600 dark:text-slate-400">Skills</span>
                     </div>
                     <div className="text-center md:text-left">
                       <span className="font-bold block md:inline md:mr-1">{profile?.experience ? 'Yes' : 'No'}</span>
-                      <span className="text-gray-600">Experience</span>
+                      <span className="text-gray-600 dark:text-slate-400">Experience</span>
                     </div>
                     <div className="text-center md:text-left">
                       <span className="font-bold block md:inline md:mr-1">{report.score}</span>
-                      <span className="text-gray-600">Score</span>
+                      <span className="text-gray-600 dark:text-slate-400">Score</span>
                     </div>
                   </div>
 
                   <div className="space-y-2 text-sm md:text-base">
-                    <p className="font-semibold text-gray-800">{profile?.displayName || report.candidateName}</p>
-                    <p className="text-gray-600 whitespace-pre-wrap">{profile?.bio || "No bio available."}</p>
+                    <p className="font-semibold text-gray-800 dark:text-white">{profile?.displayName || report.candidateName}</p>
+                    <p className="text-gray-600 dark:text-slate-300 whitespace-pre-wrap">{profile?.bio || "No bio available."}</p>
                     
                     {candidateEmail && (
-                      <a href={`mailto:${candidateEmail}`} className="text-blue-600 hover:underline block font-medium mt-1">
+                      <a href={`mailto:${candidateEmail}`} className="text-blue-600 dark:text-blue-400 hover:underline block font-medium mt-1">
                         <i className="far fa-envelope mr-2"></i>{candidateEmail}
                       </a>
                     )}
                     {profile?.phoneNumber && (
-                      <p className="text-gray-600"><i className="fas fa-phone mr-2"></i>{profile.phoneNumber}</p>
+                      <p className="text-gray-600 dark:text-slate-400"><i className="fas fa-phone mr-2"></i>{profile.phoneNumber}</p>
                     )}
                     {profile?.portfolio && (
-                      <a href={profile.portfolio} target="_blank" rel="noreferrer" className="text-blue-800 font-medium flex items-center justify-center md:justify-start gap-1 mt-1">
+                      <a href={profile.portfolio} target="_blank" rel="noreferrer" className="text-blue-800 dark:text-blue-400 font-medium flex items-center justify-center md:justify-start gap-1 mt-1">
                         <i className="fas fa-link mr-1"></i> {profile.portfolio}
                       </a>
                     )}

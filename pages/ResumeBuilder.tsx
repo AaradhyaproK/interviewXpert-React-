@@ -557,10 +557,10 @@ const ResumeBuilder: React.FC = () => {
   return (
     <div className="w-full mx-auto p-2 md:p-4 flex flex-col lg:flex-row gap-4 h-[calc(100vh-65px)] overflow-hidden">
       {/* Left Side: Wizard Form */}
-      <div className="w-full lg:w-4/12 bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-6 flex flex-col">
+      <div className="w-full lg:w-4/12 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-gray-100 dark:border-slate-800 p-4 md:p-6 flex flex-col">
         <div className="mb-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
               <i className="fas fa-magic text-primary"></i> Resume Builder
             </h2>
             <div className="flex gap-2 flex-wrap justify-end">
@@ -569,13 +569,13 @@ const ResumeBuilder: React.FC = () => {
                    key={s} 
                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                      step === s ? 'bg-primary text-white shadow-lg shadow-blue-200 scale-110' : 
-                     step > s ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-400'
+                     step > s ? 'bg-green-500 text-white' : 'bg-gray-100 dark:bg-slate-800 text-gray-400 dark:text-slate-500'
                    }`}
                  >{step > s ? <i className="fas fa-check"></i> : (s > 5 ? '•' : s)}</div>
                ))}
             </div>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-2">
+          <div className="w-full bg-gray-100 dark:bg-slate-800 rounded-full h-2">
             <div className="bg-primary h-2 rounded-full transition-all duration-300" style={{ width: `${(step / 9) * 100}%` }}></div>
           </div>
         </div>
@@ -583,37 +583,37 @@ const ResumeBuilder: React.FC = () => {
         <div className="flex-grow overflow-y-auto pr-2">
           {step === 1 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-user-circle"></i> Personal Details</h3>
-              <input type="text" placeholder="Full Name" className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" value={personalInfo.fullName} onChange={e => setPersonalInfo({...personalInfo, fullName: e.target.value})} />
-              <input type="email" placeholder="Email Address" className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" value={personalInfo.email} onChange={e => setPersonalInfo({...personalInfo, email: e.target.value})} />
-              <input type="tel" placeholder="Phone Number" className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" value={personalInfo.phone} onChange={e => setPersonalInfo({...personalInfo, phone: e.target.value})} />
-              <input type="text" placeholder="Location (City, Country)" className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" value={personalInfo.location} onChange={e => setPersonalInfo({...personalInfo, location: e.target.value})} />
-              <input type="text" placeholder="LinkedIn URL (Optional)" className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" value={personalInfo.linkedin} onChange={e => setPersonalInfo({...personalInfo, linkedin: e.target.value})} />
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-user-circle"></i> Personal Details</h3>
+              <input type="text" placeholder="Full Name" className="w-full p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all bg-white dark:bg-slate-950 dark:text-white" value={personalInfo.fullName} onChange={e => setPersonalInfo({...personalInfo, fullName: e.target.value})} />
+              <input type="email" placeholder="Email Address" className="w-full p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all bg-white dark:bg-slate-950 dark:text-white" value={personalInfo.email} onChange={e => setPersonalInfo({...personalInfo, email: e.target.value})} />
+              <input type="tel" placeholder="Phone Number" className="w-full p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all bg-white dark:bg-slate-950 dark:text-white" value={personalInfo.phone} onChange={e => setPersonalInfo({...personalInfo, phone: e.target.value})} />
+              <input type="text" placeholder="Location (City, Country)" className="w-full p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all bg-white dark:bg-slate-950 dark:text-white" value={personalInfo.location} onChange={e => setPersonalInfo({...personalInfo, location: e.target.value})} />
+              <input type="text" placeholder="LinkedIn URL (Optional)" className="w-full p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all bg-white dark:bg-slate-950 dark:text-white" value={personalInfo.linkedin} onChange={e => setPersonalInfo({...personalInfo, linkedin: e.target.value})} />
             </div>
           )}
 
           {step === 2 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-align-left"></i> Professional Summary</h3>
-              <p className="text-sm text-gray-500">Write a short summary of your career highlights and goals.</p>
-              <textarea rows={6} placeholder="E.g. Experienced software engineer with 5 years of..." className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none transition-all" value={summary} onChange={e => setSummary(e.target.value)}></textarea>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-align-left"></i> Professional Summary</h3>
+              <p className="text-sm text-gray-500 dark:text-slate-400">Write a short summary of your career highlights and goals.</p>
+              <textarea rows={6} placeholder="E.g. Experienced software engineer with 5 years of..." className="w-full p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none transition-all bg-white dark:bg-slate-950 dark:text-white" value={summary} onChange={e => setSummary(e.target.value)}></textarea>
             </div>
           )}
 
           {step === 3 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-briefcase"></i> Experience</h3>
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
-                <input type="text" placeholder="Job Title" className="w-full p-3 border rounded-lg" value={tempExp.role} onChange={e => setTempExp({...tempExp, role: e.target.value})} />
-                <input type="text" placeholder="Company Name" className="w-full p-3 border rounded-lg" value={tempExp.company} onChange={e => setTempExp({...tempExp, company: e.target.value})} />
-                <input type="text" placeholder="Duration (e.g. Jan 2020 - Present)" className="w-full p-3 border rounded-lg" value={tempExp.duration} onChange={e => setTempExp({...tempExp, duration: e.target.value})} />
-                <textarea placeholder="Description of responsibilities..." rows={3} className="w-full p-3 border rounded-lg" value={tempExp.description} onChange={e => setTempExp({...tempExp, description: e.target.value})}></textarea>
-                <button onClick={addExperience} className="w-full py-3 bg-white border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 transition-colors shadow-sm">+ Add Position</button>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-briefcase"></i> Experience</h3>
+              <div className="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl border border-gray-100 dark:border-slate-800 space-y-3">
+                <input type="text" placeholder="Job Title" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempExp.role} onChange={e => setTempExp({...tempExp, role: e.target.value})} />
+                <input type="text" placeholder="Company Name" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempExp.company} onChange={e => setTempExp({...tempExp, company: e.target.value})} />
+                <input type="text" placeholder="Duration (e.g. Jan 2020 - Present)" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempExp.duration} onChange={e => setTempExp({...tempExp, duration: e.target.value})} />
+                <textarea placeholder="Description of responsibilities..." rows={3} className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempExp.description} onChange={e => setTempExp({...tempExp, description: e.target.value})}></textarea>
+                <button onClick={addExperience} className="w-full py-3 bg-white dark:bg-slate-950 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors shadow-sm">+ Add Position</button>
               </div>
               <div className="space-y-2">
                 {experiences.map((exp, i) => (
-                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-sm">
-                    <span className="font-medium">{exp.role} at {exp.company}</span>
+                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-slate-800/50 rounded-lg text-sm">
+                    <span className="font-medium dark:text-slate-300">{exp.role} at {exp.company}</span>
                     <button onClick={() => setExperiences(experiences.filter(e => e.id !== exp.id))} className="text-red-500 hover:text-red-700"><i className="fas fa-trash"></i></button>
                   </div>
                 ))}
@@ -623,17 +623,17 @@ const ResumeBuilder: React.FC = () => {
 
           {step === 4 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-project-diagram"></i> Projects</h3>
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
-                <input type="text" placeholder="Project Title" className="w-full p-3 border rounded-lg" value={tempProject.title} onChange={e => setTempProject({...tempProject, title: e.target.value})} />
-                <input type="text" placeholder="Link (GitHub/Live Demo)" className="w-full p-3 border rounded-lg" value={tempProject.link} onChange={e => setTempProject({...tempProject, link: e.target.value})} />
-                <textarea placeholder="Project Description..." rows={3} className="w-full p-3 border rounded-lg" value={tempProject.description} onChange={e => setTempProject({...tempProject, description: e.target.value})}></textarea>
-                <button onClick={addProject} className="w-full py-3 bg-white border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 transition-colors shadow-sm">+ Add Project</button>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-project-diagram"></i> Projects</h3>
+              <div className="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl border border-gray-100 dark:border-slate-800 space-y-3">
+                <input type="text" placeholder="Project Title" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempProject.title} onChange={e => setTempProject({...tempProject, title: e.target.value})} />
+                <input type="text" placeholder="Link (GitHub/Live Demo)" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempProject.link} onChange={e => setTempProject({...tempProject, link: e.target.value})} />
+                <textarea placeholder="Project Description..." rows={3} className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempProject.description} onChange={e => setTempProject({...tempProject, description: e.target.value})}></textarea>
+                <button onClick={addProject} className="w-full py-3 bg-white dark:bg-slate-950 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors shadow-sm">+ Add Project</button>
               </div>
               <div className="space-y-2">
                 {projects.map((proj, i) => (
-                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-sm">
-                    <span className="font-medium">{proj.title}</span>
+                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-slate-800/50 rounded-lg text-sm">
+                    <span className="font-medium dark:text-slate-300">{proj.title}</span>
                     <button onClick={() => setProjects(projects.filter(p => p.id !== proj.id))} className="text-red-500 hover:text-red-700"><i className="fas fa-trash"></i></button>
                   </div>
                 ))}
@@ -643,17 +643,17 @@ const ResumeBuilder: React.FC = () => {
 
           {step === 5 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-graduation-cap"></i> Education</h3>
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
-                <input type="text" placeholder="Degree / Certificate" className="w-full p-3 border rounded-lg" value={tempEdu.degree} onChange={e => setTempEdu({...tempEdu, degree: e.target.value})} />
-                <input type="text" placeholder="School / University" className="w-full p-3 border rounded-lg" value={tempEdu.school} onChange={e => setTempEdu({...tempEdu, school: e.target.value})} />
-                <input type="text" placeholder="Year (e.g. 2022)" className="w-full p-3 border rounded-lg" value={tempEdu.year} onChange={e => setTempEdu({...tempEdu, year: e.target.value})} />
-                <button onClick={addEducation} className="w-full py-3 bg-white border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 transition-colors shadow-sm">+ Add Education</button>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-graduation-cap"></i> Education</h3>
+              <div className="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl border border-gray-100 dark:border-slate-800 space-y-3">
+                <input type="text" placeholder="Degree / Certificate" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempEdu.degree} onChange={e => setTempEdu({...tempEdu, degree: e.target.value})} />
+                <input type="text" placeholder="School / University" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempEdu.school} onChange={e => setTempEdu({...tempEdu, school: e.target.value})} />
+                <input type="text" placeholder="Year (e.g. 2022)" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempEdu.year} onChange={e => setTempEdu({...tempEdu, year: e.target.value})} />
+                <button onClick={addEducation} className="w-full py-3 bg-white dark:bg-slate-950 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors shadow-sm">+ Add Education</button>
               </div>
               <div className="space-y-2">
                 {education.map((edu, i) => (
-                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-sm">
-                    <span className="font-medium">{edu.degree} at {edu.school}</span>
+                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-slate-800/50 rounded-lg text-sm">
+                    <span className="font-medium dark:text-slate-300">{edu.degree} at {edu.school}</span>
                     <button onClick={() => setEducation(education.filter(e => e.id !== edu.id))} className="text-red-500 hover:text-red-700"><i className="fas fa-trash"></i></button>
                   </div>
                 ))}
@@ -663,17 +663,17 @@ const ResumeBuilder: React.FC = () => {
 
           {step === 6 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-certificate"></i> Certifications</h3>
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
-                <input type="text" placeholder="Certification Name" className="w-full p-3 border rounded-lg" value={tempCert.name} onChange={e => setTempCert({...tempCert, name: e.target.value})} />
-                <input type="text" placeholder="Issuing Organization" className="w-full p-3 border rounded-lg" value={tempCert.issuer} onChange={e => setTempCert({...tempCert, issuer: e.target.value})} />
-                <input type="text" placeholder="Year" className="w-full p-3 border rounded-lg" value={tempCert.year} onChange={e => setTempCert({...tempCert, year: e.target.value})} />
-                <button onClick={addCertification} className="w-full py-3 bg-white border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 transition-colors shadow-sm">+ Add Certification</button>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-certificate"></i> Certifications</h3>
+              <div className="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl border border-gray-100 dark:border-slate-800 space-y-3">
+                <input type="text" placeholder="Certification Name" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempCert.name} onChange={e => setTempCert({...tempCert, name: e.target.value})} />
+                <input type="text" placeholder="Issuing Organization" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempCert.issuer} onChange={e => setTempCert({...tempCert, issuer: e.target.value})} />
+                <input type="text" placeholder="Year" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempCert.year} onChange={e => setTempCert({...tempCert, year: e.target.value})} />
+                <button onClick={addCertification} className="w-full py-3 bg-white dark:bg-slate-950 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors shadow-sm">+ Add Certification</button>
               </div>
               <div className="space-y-2">
                 {certifications.map((cert, i) => (
-                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-sm">
-                    <span className="font-medium">{cert.name}</span>
+                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-slate-800/50 rounded-lg text-sm">
+                    <span className="font-medium dark:text-slate-300">{cert.name}</span>
                     <button onClick={() => setCertifications(certifications.filter(c => c.id !== cert.id))} className="text-red-500 hover:text-red-700"><i className="fas fa-trash"></i></button>
                   </div>
                 ))}
@@ -683,18 +683,18 @@ const ResumeBuilder: React.FC = () => {
 
           {step === 7 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-hands-helping"></i> Volunteering</h3>
-              <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 space-y-3">
-                <input type="text" placeholder="Role" className="w-full p-3 border rounded-lg" value={tempVol.role} onChange={e => setTempVol({...tempVol, role: e.target.value})} />
-                <input type="text" placeholder="Organization" className="w-full p-3 border rounded-lg" value={tempVol.organization} onChange={e => setTempVol({...tempVol, organization: e.target.value})} />
-                <input type="text" placeholder="Duration" className="w-full p-3 border rounded-lg" value={tempVol.duration} onChange={e => setTempVol({...tempVol, duration: e.target.value})} />
-                <textarea placeholder="Description..." rows={2} className="w-full p-3 border rounded-lg" value={tempVol.description} onChange={e => setTempVol({...tempVol, description: e.target.value})}></textarea>
-                <button onClick={addVolunteering} className="w-full py-3 bg-white border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 transition-colors shadow-sm">+ Add Volunteering</button>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-hands-helping"></i> Volunteering</h3>
+              <div className="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl border border-gray-100 dark:border-slate-800 space-y-3">
+                <input type="text" placeholder="Role" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempVol.role} onChange={e => setTempVol({...tempVol, role: e.target.value})} />
+                <input type="text" placeholder="Organization" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempVol.organization} onChange={e => setTempVol({...tempVol, organization: e.target.value})} />
+                <input type="text" placeholder="Duration" className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempVol.duration} onChange={e => setTempVol({...tempVol, duration: e.target.value})} />
+                <textarea placeholder="Description..." rows={2} className="w-full p-3 border dark:border-slate-700 rounded-lg bg-white dark:bg-slate-950 dark:text-white" value={tempVol.description} onChange={e => setTempVol({...tempVol, description: e.target.value})}></textarea>
+                <button onClick={addVolunteering} className="w-full py-3 bg-white dark:bg-slate-950 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors shadow-sm">+ Add Volunteering</button>
               </div>
               <div className="space-y-2">
                 {volunteering.map((vol, i) => (
-                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg text-sm">
-                    <span className="font-medium">{vol.role} at {vol.organization}</span>
+                  <div key={i} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-slate-800/50 rounded-lg text-sm">
+                    <span className="font-medium dark:text-slate-300">{vol.role} at {vol.organization}</span>
                     <button onClick={() => setVolunteering(volunteering.filter(v => v.id !== vol.id))} className="text-red-500 hover:text-red-700"><i className="fas fa-trash"></i></button>
                   </div>
                 ))}
@@ -704,27 +704,27 @@ const ResumeBuilder: React.FC = () => {
 
           {step === 8 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-tools"></i> Skills</h3>
-              <p className="text-sm text-gray-500">List your top skills separated by commas.</p>
-              <textarea rows={4} placeholder="React, TypeScript, Node.js, Project Management, Communication..." className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none transition-all" value={skills} onChange={e => setSkills(e.target.value)}></textarea>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-tools"></i> Skills</h3>
+              <p className="text-sm text-gray-500 dark:text-slate-400">List your top skills separated by commas.</p>
+              <textarea rows={4} placeholder="React, TypeScript, Node.js, Project Management, Communication..." className="w-full p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none transition-all bg-white dark:bg-slate-950 dark:text-white" value={skills} onChange={e => setSkills(e.target.value)}></textarea>
             </div>
           )}
 
           {step === 9 && (
             <div className="space-y-4 animate-fade-in">
-              <h3 className="text-lg font-semibold text-gray-700 flex items-center gap-2"><i className="fas fa-heart"></i> Hobbies & Interests</h3>
-              <p className="text-sm text-gray-500">List your hobbies or interests separated by commas.</p>
-              <textarea rows={4} placeholder="Photography, Hiking, Chess, Reading..." className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none transition-all" value={hobbies} onChange={e => setHobbies(e.target.value)}></textarea>
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-slate-300 flex items-center gap-2"><i className="fas fa-heart"></i> Hobbies & Interests</h3>
+              <p className="text-sm text-gray-500 dark:text-slate-400">List your hobbies or interests separated by commas.</p>
+              <textarea rows={4} placeholder="Photography, Hiking, Chess, Reading..." className="w-full p-4 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none resize-none transition-all bg-white dark:bg-slate-950 dark:text-white" value={hobbies} onChange={e => setHobbies(e.target.value)}></textarea>
             </div>
           )}
         </div>
 
-        <div className="mt-6 flex justify-between pt-4 border-t border-gray-100">
-          <button onClick={() => setStep(Math.max(1, step - 1))} disabled={step === 1} className="px-6 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg disabled:opacity-50">Back</button>
+        <div className="mt-6 flex justify-between pt-4 border-t border-gray-100 dark:border-slate-800">
+          <button onClick={() => setStep(Math.max(1, step - 1))} disabled={step === 1} className="px-6 py-2 text-gray-600 dark:text-slate-400 font-medium hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg disabled:opacity-50">Back</button>
           {step < 9 ? (
             <div className="flex gap-2">
               {[4, 6, 7, 9].includes(step) && (
-                <button onClick={() => setStep(Math.min(9, step + 1))} className="px-4 py-2 text-gray-500 hover:text-gray-700 font-medium transition-colors">Skip</button>
+                <button onClick={() => setStep(Math.min(9, step + 1))} className="px-4 py-2 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-white font-medium transition-colors">Skip</button>
               )}
               <button onClick={() => setStep(Math.min(9, step + 1))} className="px-6 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary-dark shadow-lg shadow-blue-200 transition-all">Next Step</button>
             </div>
@@ -738,19 +738,19 @@ const ResumeBuilder: React.FC = () => {
       </div>
 
       {/* Right Side: Live Preview */}
-      <div className="w-full lg:w-8/12 bg-gray-200 rounded-2xl p-4 overflow-auto flex justify-center items-start">
+      <div className="w-full lg:w-8/12 bg-gray-200 dark:bg-black/50 rounded-2xl p-4 overflow-auto flex justify-center items-start">
         <div className="flex flex-col items-center">
           {/* Template Selector */}
-          <div className="bg-white p-2 rounded-full shadow-md mb-6 flex gap-2">
+          <div className="bg-white dark:bg-slate-900 p-2 rounded-full shadow-md mb-6 flex gap-2">
             <button 
               onClick={() => setActiveTemplate('modern')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTemplate === 'modern' ? 'bg-primary text-white shadow' : 'text-gray-600 hover:bg-gray-50'}`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTemplate === 'modern' ? 'bg-primary text-white shadow' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800'}`}
             >
               Modern
             </button>
             <button 
               onClick={() => setActiveTemplate('classic')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTemplate === 'classic' ? 'bg-primary text-white shadow' : 'text-gray-600 hover:bg-gray-50'}`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeTemplate === 'classic' ? 'bg-primary text-white shadow' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800'}`}
             >
               Classic
             </button>

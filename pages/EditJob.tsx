@@ -118,30 +118,30 @@ const EditJob: React.FC = () => {
     }
   };
 
-  if (loading) return <div className="text-center py-10">Loading job details...</div>;
+  if (loading) return <div className="text-center py-10 dark:text-slate-400">Loading job details...</div>;
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+    <div className="max-w-2xl mx-auto bg-white dark:bg-slate-900 p-8 rounded-lg shadow-md border border-transparent dark:border-slate-800">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
         <i className="fas fa-edit text-primary"></i> Edit Job
       </h2>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Job Title</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Job Title</label>
             <input 
               type="text" required 
-              className="mt-1 w-full px-3 py-2 border rounded-md"
+              className="mt-1 w-full px-3 py-2 border dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 dark:text-white"
               value={formData.title}
               onChange={e => setFormData({...formData, title: e.target.value})}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Company</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Company</label>
             <input 
               type="text" required 
-              className="mt-1 w-full px-3 py-2 border rounded-md"
+              className="mt-1 w-full px-3 py-2 border dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 dark:text-white"
               value={formData.companyName}
               onChange={e => setFormData({...formData, companyName: e.target.value})}
             />
@@ -149,10 +149,10 @@ const EditJob: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Qualifications</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Qualifications</label>
           <textarea 
             required rows={3}
-            className="mt-1 w-full px-3 py-2 border rounded-md"
+            className="mt-1 w-full px-3 py-2 border dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 dark:text-white"
             value={formData.qualifications}
             onChange={e => setFormData({...formData, qualifications: e.target.value})}
           />
@@ -160,18 +160,18 @@ const EditJob: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Deadline</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Deadline</label>
             <input 
               type="date" required 
-              className="mt-1 w-full px-3 py-2 border rounded-md"
+              className="mt-1 w-full px-3 py-2 border dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 dark:text-white"
               value={formData.deadline}
               onChange={e => setFormData({...formData, deadline: e.target.value})}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Interview Access</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Interview Access</label>
             <select 
-              className="mt-1 w-full px-3 py-2 border rounded-md"
+              className="mt-1 w-full px-3 py-2 border dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 dark:text-white"
               value={formData.permission}
               onChange={e => setFormData({...formData, permission: e.target.value})}
             >
@@ -182,22 +182,22 @@ const EditJob: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Job Description</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Job Description</label>
           <textarea 
             required rows={5}
-            className="mt-1 w-full px-3 py-2 border rounded-md"
+            className="mt-1 w-full px-3 py-2 border dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 dark:text-white"
             value={formData.description}
             onChange={e => setFormData({...formData, description: e.target.value})}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Job Category</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Job Category</label>
           <select 
             name="category" 
             value={formData.category} 
             onChange={e => setFormData({...formData, category: e.target.value})}
-            className="mt-1 w-full px-3 py-2 border rounded-md"
+            className="mt-1 w-full px-3 py-2 border dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 dark:text-white"
           >
             <option value="">Select a Category</option>
             {JOB_CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
@@ -205,20 +205,20 @@ const EditJob: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Required Skills</label>
-          <div className="flex flex-wrap gap-2 mb-2 min-h-[40px] p-2 border rounded-md bg-gray-50 mt-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300">Required Skills</label>
+          <div className="flex flex-wrap gap-2 mb-2 min-h-[40px] p-2 border dark:border-slate-700 rounded-md bg-gray-50 dark:bg-slate-800 mt-1">
             {formData.skills ? formData.skills.split(',').map(s => s.trim()).filter(s => s).map(skill => (
               <span key={skill} className="px-2 py-1 bg-primary text-white rounded-full text-sm flex items-center gap-1">
                 {skill}
                 <button type="button" onClick={() => toggleSkill(skill)} className="hover:text-gray-200 font-bold">&times;</button>
               </span>
-            )) : <span className="text-gray-400 text-sm p-1">No skills selected</span>}
+            )) : <span className="text-gray-400 dark:text-slate-500 text-sm p-1">No skills selected</span>}
           </div>
 
           <div className="flex gap-2 mb-2">
              <input 
                type="text"
-               className="flex-1 px-3 py-2 border rounded-md"
+               className="flex-1 px-3 py-2 border dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 dark:text-white"
                placeholder="Search or add custom skill..."
                value={skillSearch}
                onChange={e => setSkillSearch(e.target.value)}

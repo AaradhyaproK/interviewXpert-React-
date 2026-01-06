@@ -139,10 +139,10 @@ const JobCandidates: React.FC = () => {
   return (
     <div>
       <div className="flex items-center gap-4 mb-6">
-        <Link to="/recruiter/jobs" className="text-gray-500 hover:text-primary">
+        <Link to="/recruiter/jobs" className="text-gray-500 dark:text-slate-400 hover:text-primary">
           <i className="fas fa-arrow-left"></i> Back
         </Link>
-        <h2 className="text-2xl font-bold text-gray-800">Candidates for: <span className="text-primary">{jobTitle}</span></h2>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Candidates for: <span className="text-primary">{jobTitle}</span></h2>
         <div className="ml-auto"><NotificationCenter /></div>
       </div>
 
@@ -152,34 +152,34 @@ const JobCandidates: React.FC = () => {
           placeholder="Search candidates by name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full md:w-1/3 p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+          className="w-full md:w-1/3 p-3 border border-gray-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-black/80 backdrop-blur-sm dark:text-white dark:placeholder-slate-500"
         />
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
-          className="w-full md:w-1/4 p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white"
+          className="w-full md:w-1/4 p-3 border border-gray-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-black/80 backdrop-blur-sm dark:text-white cursor-pointer"
         >
-          <option value="newest">Newest First</option>
-          <option value="scoreHigh">Score: High to Low</option>
-          <option value="scoreLow">Score: Low to High</option>
+          <option value="newest" className="bg-white dark:bg-slate-900">Newest First</option>
+          <option value="scoreHigh" className="bg-white dark:bg-slate-900">Score: High to Low</option>
+          <option value="scoreLow" className="bg-white dark:bg-slate-900">Score: Low to High</option>
         </select>
       </div>
 
       {filteredInterviews.length === 0 ? (
-        <div className="text-center py-10 bg-white rounded-lg shadow-sm border border-gray-100">
-          <p className="text-gray-500">No candidates found.</p>
+        <div className="text-center py-10 bg-white dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-sm border border-gray-100 dark:border-slate-800">
+          <p className="text-gray-500 dark:text-slate-400">No candidates found.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredInterviews.map(interview => (
-            <div key={interview.id} className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+            <div key={interview.id} className="bg-white dark:bg-black/80 backdrop-blur-sm p-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 hover:shadow-md hover:border-blue-200 dark:hover:border-blue-900 transition-all">
               <div className="flex items-center gap-3 mb-4">
-                 <div className="h-10 w-10 rounded-full bg-primary-light text-primary flex items-center justify-center font-bold">
+                 <div className="h-10 w-10 rounded-full bg-primary-light dark:bg-primary/20 text-primary flex items-center justify-center font-bold">
                     {interview.candidateName.charAt(0)}
                  </div>
                  <div>
-                   <h3 className="font-bold text-gray-800">{interview.candidateName}</h3>
-                    <p className="text-xs text-gray-500">
+                   <h3 className="font-bold text-gray-800 dark:text-white">{interview.candidateName}</h3>
+                    <p className="text-xs text-gray-500 dark:text-slate-400">
                       {interview.submittedAt?.toDate
                         ? (() => {
                             const d = interview.submittedAt.toDate();
@@ -194,35 +194,35 @@ const JobCandidates: React.FC = () => {
 
               <div className="space-y-2 mb-6">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Overall Score:</span>
-                  <span className="font-bold text-gray-800">{interview.score}</span>
+                  <span className="text-gray-500 dark:text-slate-400">Overall Score:</span>
+                  <span className="font-bold text-gray-800 dark:text-white">{interview.score}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Resume Match:</span>
-                  <span className="font-semibold text-gray-700">{interview.resumeScore}</span>
+                  <span className="text-gray-500 dark:text-slate-400">Resume Match:</span>
+                  <span className="font-semibold text-gray-700 dark:text-slate-300">{interview.resumeScore}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Q&A Quality:</span>
-                  <span className="font-semibold text-gray-700">{interview.qnaScore}</span>
+                  <span className="text-gray-500 dark:text-slate-400">Q&A Quality:</span>
+                  <span className="font-semibold text-gray-700 dark:text-slate-300">{interview.qnaScore}</span>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-gray-100 flex flex-col gap-3">
+              <div className="pt-4 border-t border-gray-100 dark:border-slate-800 flex flex-col gap-3">
                 <div className="flex items-center justify-between w-full">
                   <select
                     value={interview.status || 'Pending'}
                     onChange={(e) => handleStatusChange(interview.id, e.target.value, (interview as any).candidateUID || (interview as any).candidateId || (interview as any).userId || (interview as any).uid)}
                     className={`px-2 py-1 rounded text-xs font-semibold border-0 cursor-pointer outline-none focus:ring-2 focus:ring-primary/20 ${
-                       interview.status === 'Hired' ? 'bg-teal-100 text-teal-800' : 
-                       interview.status === 'Rejected' ? 'bg-red-100 text-red-800' :
-                       'bg-gray-100 text-gray-600'
+                       interview.status === 'Hired' ? 'bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400' : 
+                       interview.status === 'Rejected' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' :
+                       'bg-gray-100 text-gray-600 dark:bg-slate-800 dark:text-slate-400'
                     }`}
                   >
-                    <option value="Pending">Pending</option>
-                    <option value="Reviewing">Reviewing</option>
-                    <option value="Interview Scheduled">Interview Scheduled</option>
-                    <option value="Hired">Hired</option>
-                    <option value="Rejected">Rejected</option>
+                    <option value="Pending" className="bg-white dark:bg-slate-900">Pending</option>
+                    <option value="Reviewing" className="bg-white dark:bg-slate-900">Reviewing</option>
+                    <option value="Interview Scheduled" className="bg-white dark:bg-slate-900">Interview Scheduled</option>
+                    <option value="Hired" className="bg-white dark:bg-slate-900">Hired</option>
+                    <option value="Rejected" className="bg-white dark:bg-slate-900">Rejected</option>
                   </select>
                   <div className="flex items-center gap-2">
                     <button 
@@ -235,14 +235,14 @@ const JobCandidates: React.FC = () => {
                           candidateName: interview.candidateName 
                         });
                       }}
-                      className="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-full transition-colors"
+                      className="p-2 text-gray-400 dark:text-slate-500 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-full transition-colors"
                       title="Send Message"
                     >
                       <i className="fas fa-envelope"></i>
                     </button>
                     <button 
                       onClick={() => setResumeModal({ isOpen: true, text: (interview as any).resumeText || 'No resume text available', candidateName: interview.candidateName })}
-                      className="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-full transition-colors"
+                      className="p-2 text-gray-400 dark:text-slate-500 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-full transition-colors"
                       title="View Resume"
                     >
                       <i className="fas fa-file-alt"></i>
@@ -252,7 +252,7 @@ const JobCandidates: React.FC = () => {
                         const cId = (interview as any).candidateUID || (interview as any).candidateId || (interview as any).userId || (interview as any).uid || '';
                         handleViewProfile(cId, String(interview.score), interview.candidateName);
                       }}
-                      className="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-full transition-colors"
+                      className="p-2 text-gray-400 dark:text-slate-500 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-full transition-colors"
                       title="View Profile"
                     >
                       <i className="fas fa-user-circle"></i>
@@ -263,7 +263,7 @@ const JobCandidates: React.FC = () => {
                 <Link 
                   to={`/report/${interview.id}`} 
                   state={{ candidateId: (interview as any).candidateUID || (interview as any).candidateId || (interview as any).userId || (interview as any).uid }}
-                  className="block w-full text-center py-2 bg-gray-50 text-primary hover:bg-primary hover:text-white rounded-lg transition-colors text-sm font-medium"
+                  className="block w-full text-center py-2 bg-gray-50 dark:bg-slate-800 text-primary dark:text-blue-400 hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white rounded-lg transition-colors text-sm font-medium"
                 >
                   View Full Report <i className="fas fa-chevron-right ml-1"></i>
                 </Link>
@@ -282,13 +282,13 @@ const JobCandidates: React.FC = () => {
 
       {resumeModal.isOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl h-[80vh] flex flex-col animate-in fade-in zoom-in duration-200">
-            <div className="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-              <h3 className="font-bold text-gray-800">Resume: {resumeModal.candidateName}</h3>
-              <button onClick={() => setResumeModal(prev => ({ ...prev, isOpen: false }))} className="text-gray-400 hover:text-gray-600">✕</button>
+          <div className="bg-white dark:bg-black/80 backdrop-blur-sm rounded-xl shadow-2xl w-full max-w-2xl h-[80vh] flex flex-col animate-in fade-in zoom-in duration-200">
+            <div className="p-4 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-gray-50 dark:bg-black/80 backdrop-blur-sm">
+              <h3 className="font-bold text-gray-800 dark:text-white">Resume: {resumeModal.candidateName}</h3>
+              <button onClick={() => setResumeModal(prev => ({ ...prev, isOpen: false }))} className="text-gray-400 hover:text-gray-600 dark:text-slate-400 dark:hover:text-white transition-colors">✕</button>
             </div>
             <div className="p-6 overflow-y-auto flex-1">
-              <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 leading-relaxed">{resumeModal.text}</pre>
+              <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 dark:text-slate-300 leading-relaxed">{resumeModal.text}</pre>
             </div>
           </div>
         </div>
@@ -296,11 +296,11 @@ const JobCandidates: React.FC = () => {
 
       {profileModal.isOpen && (
         <div className="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-4" onClick={() => setProfileModal({ ...profileModal, isOpen: false })}>
-          <div className="bg-white rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
+          <div className="bg-white dark:bg-black/80 backdrop-blur-sm rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in duration-200" onClick={e => e.stopPropagation()}>
             {/* Header */}
-            <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white z-10">
-              <h3 className="font-bold text-lg text-gray-800">Candidate Profile</h3>
-              <button onClick={() => setProfileModal({ ...profileModal, isOpen: false })} className="text-gray-500 hover:text-gray-800 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors">
+            <div className="p-4 border-b dark:border-slate-800 flex justify-between items-center sticky top-0 bg-white dark:bg-black/80 backdrop-blur-sm z-10">
+              <h3 className="font-bold text-lg text-gray-800 dark:text-white">Candidate Profile</h3>
+              <button onClick={() => setProfileModal({ ...profileModal, isOpen: false })} className="text-gray-500 dark:text-slate-400 hover:text-gray-800 dark:hover:text-white w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
                 <i className="fas fa-times"></i>
               </button>
             </div>
@@ -313,8 +313,8 @@ const JobCandidates: React.FC = () => {
                   {/* Insta Header Section */}
                   <div className="flex flex-col md:flex-row gap-8 items-center md:items-start mb-10">
                     {/* Avatar */}
-                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-gray-200 p-1 flex-shrink-0">
-                      <div className="w-full h-full rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-gray-200 dark:border-slate-700 p-1 flex-shrink-0">
+                      <div className="w-full h-full rounded-full overflow-hidden bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
                       {profileModal.data.photoURL ? (
                         <img src={profileModal.data.photoURL} alt="Profile" className="w-full h-full object-cover" />
                       ) : (
@@ -326,31 +326,31 @@ const JobCandidates: React.FC = () => {
                     {/* Info */}
                     <div className="flex-1 text-center md:text-left w-full">
                       <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
-                        <h2 className="text-2xl font-light text-gray-800">{profileModal.data.displayName || profileModal.candidateName}</h2>
+                        <h2 className="text-2xl font-light text-gray-800 dark:text-white">{profileModal.data.displayName || profileModal.candidateName}</h2>
                         {profileModal.data.location && (
                            <span className="text-sm text-gray-500"><i className="fas fa-map-marker-alt mr-1"></i> {profileModal.data.location}</span>
                         )}
                       </div>
                       
                       {/* Stats / Quick Info */}
-                      <div className="flex justify-center md:justify-start gap-8 mb-5 text-sm md:text-base border-t border-b border-gray-100 py-3 md:border-none md:py-0">
+                      <div className="flex justify-center md:justify-start gap-8 mb-5 text-sm md:text-base border-t border-b border-gray-100 dark:border-slate-800 py-3 md:border-none md:py-0">
                         <div className="text-center md:text-left">
                           <span className="font-bold block md:inline md:mr-1">{profileModal.data.skills ? profileModal.data.skills.split(',').length : 0}</span>
-                          <span className="text-gray-600">Skills</span>
+                          <span className="text-gray-600 dark:text-slate-400">Skills</span>
                         </div>
                         <div className="text-center md:text-left">
                           <span className="font-bold block md:inline md:mr-1">{profileModal.data.experience ? 'Yes' : 'No'}</span>
-                          <span className="text-gray-600">Experience</span>
+                          <span className="text-gray-600 dark:text-slate-400">Experience</span>
                         </div>
                         <div className="text-center md:text-left">
                           <span className="font-bold block md:inline md:mr-1">{profileModal.score || 'N/A'}</span>
-                          <span className="text-gray-600">Score</span>
+                          <span className="text-gray-600 dark:text-slate-400">Score</span>
                         </div>
                       </div>
 
                       <div className="space-y-2 text-sm md:text-base">
-                        <p className="font-semibold text-gray-800">{profileModal.data.displayName || profileModal.candidateName}</p>
-                        <p className="text-gray-600 whitespace-pre-wrap">{profileModal.data.bio || "No bio available."}</p>
+                        <p className="font-semibold text-gray-800 dark:text-white">{profileModal.data.displayName || profileModal.candidateName}</p>
+                        <p className="text-gray-600 dark:text-slate-300 whitespace-pre-wrap">{profileModal.data.bio || "No bio available."}</p>
                         
                         {profileModal.email && (
                           <a href={`mailto:${profileModal.email}`} className="text-blue-600 hover:underline block font-medium mt-1">
@@ -358,10 +358,10 @@ const JobCandidates: React.FC = () => {
                           </a>
                         )}
                         {profileModal.data.phoneNumber && (
-                          <p className="text-gray-600"><i className="fas fa-phone mr-2"></i>{profileModal.data.phoneNumber}</p>
+                          <p className="text-gray-600 dark:text-slate-400"><i className="fas fa-phone mr-2"></i>{profileModal.data.phoneNumber}</p>
                         )}
                         {profileModal.data.portfolio && (
-                          <a href={profileModal.data.portfolio} target="_blank" rel="noreferrer" className="text-blue-800 font-medium flex items-center justify-center md:justify-start gap-1 mt-1">
+                          <a href={profileModal.data.portfolio} target="_blank" rel="noreferrer" className="text-blue-800 dark:text-blue-400 font-medium flex items-center justify-center md:justify-start gap-1 mt-1">
                             <i className="fas fa-link mr-1"></i> {profileModal.data.portfolio}
                           </a>
                         )}
@@ -370,30 +370,30 @@ const JobCandidates: React.FC = () => {
                   </div>
 
                   {/* Content Grid */}
-                  <div className="border-t border-gray-200 pt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="border-t border-gray-200 dark:border-slate-800 pt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                       <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2"><i className="fas fa-briefcase text-gray-400"></i> Experience</h4>
-                       <p className="text-gray-600 text-sm whitespace-pre-wrap bg-gray-50 p-3 rounded-lg">{profileModal.data.experience || "No experience listed."}</p>
+                       <h4 className="font-bold text-gray-800 dark:text-white mb-3 flex items-center gap-2"><i className="fas fa-briefcase text-gray-400"></i> Experience</h4>
+                       <p className="text-gray-600 dark:text-slate-300 text-sm whitespace-pre-wrap bg-gray-50 dark:bg-slate-800 p-3 rounded-lg">{profileModal.data.experience || "No experience listed."}</p>
                     </div>
                     <div>
-                       <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2"><i className="fas fa-graduation-cap text-gray-400"></i> Education</h4>
-                       <p className="text-gray-600 text-sm whitespace-pre-wrap bg-gray-50 p-3 rounded-lg">{profileModal.data.education || "No education listed."}</p>
+                       <h4 className="font-bold text-gray-800 dark:text-white mb-3 flex items-center gap-2"><i className="fas fa-graduation-cap text-gray-400"></i> Education</h4>
+                       <p className="text-gray-600 dark:text-slate-300 text-sm whitespace-pre-wrap bg-gray-50 dark:bg-slate-800 p-3 rounded-lg">{profileModal.data.education || "No education listed."}</p>
                     </div>
                     <div className="md:col-span-2">
-                      <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2"><i className="fas fa-tools text-gray-400"></i> Skills</h4>
+                      <h4 className="font-bold text-gray-800 dark:text-white mb-3 flex items-center gap-2"><i className="fas fa-tools text-gray-400"></i> Skills</h4>
                       <div className="flex flex-wrap gap-2">
                         {profileModal.data.skills ? profileModal.data.skills.split(',').map((skill: string, i: number) => (
-                          <span key={i} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">{skill.trim()}</span>
+                          <span key={i} className="px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">{skill.trim()}</span>
                         )) : <span className="text-gray-500 text-sm">No skills listed.</span>}
                       </div>
                     </div>
 
                     {profileModal.data.preferredCategories && (
                       <div className="md:col-span-2">
-                        <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2"><i className="fas fa-layer-group text-gray-400"></i> Preferred Categories</h4>
+                        <h4 className="font-bold text-gray-800 dark:text-white mb-3 flex items-center gap-2"><i className="fas fa-layer-group text-gray-400"></i> Preferred Categories</h4>
                         <div className="flex flex-wrap gap-2">
                           {profileModal.data.preferredCategories.split(',').map((cat: string, i: number) => (
-                            <span key={i} className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm font-medium">{cat.trim()}</span>
+                            <span key={i} className="px-3 py-1 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">{cat.trim()}</span>
                           ))}
                         </div>
                       </div>
@@ -402,12 +402,12 @@ const JobCandidates: React.FC = () => {
                     {/* Social Links */}
                     <div className="md:col-span-2 flex flex-wrap gap-4 mt-2">
                       {profileModal.data.linkedin && (
-                        <a href={profileModal.data.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-700 flex items-center gap-2">
+                        <a href={profileModal.data.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-slate-400 hover:text-blue-700 flex items-center gap-2">
                           <i className="fab fa-linkedin text-xl"></i> LinkedIn
                         </a>
                       )}
                       {profileModal.data.github && (
-                        <a href={profileModal.data.github} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 flex items-center gap-2">
+                        <a href={profileModal.data.github} target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-2">
                           <i className="fab fa-github text-xl"></i> GitHub
                         </a>
                       )}

@@ -48,51 +48,51 @@ const InterviewRequests: React.FC = () => {
     req.jobTitle.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) return <div className="text-center py-10">Loading requests...</div>;
+  if (loading) return <div className="text-center py-10 dark:text-slate-400">Loading requests...</div>;
 
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Interview Requests</h1>
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Interview Requests</h1>
       
       <div className="mb-6 relative">
-        <i className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <i className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500"></i>
         <input
           type="text"
           placeholder="Search by candidate or job role..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all bg-white shadow-sm"
+          className="w-full pl-10 pr-4 py-3 border border-gray-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all bg-white dark:bg-slate-900 shadow-sm dark:text-white dark:placeholder-slate-500"
         />
       </div>
       
       {filteredRequests.length === 0 ? (
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200 text-center">
-          <p className="text-gray-500">{requests.length === 0 ? "No pending interview requests found." : "No requests match your search."}</p>
+        <div className="bg-white dark:bg-slate-900 p-8 rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 text-center">
+          <p className="text-gray-500 dark:text-slate-400">{requests.length === 0 ? "No pending interview requests found." : "No requests match your search."}</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-slate-800">
+            <thead className="bg-gray-50 dark:bg-slate-800">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Candidate</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job Role</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Requested Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Candidate</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Job Role</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Requested Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white dark:bg-slate-900 divide-y divide-gray-200 dark:divide-slate-800">
               {filteredRequests.map(req => (
-                <tr key={req.id} className="hover:bg-gray-50">
+                <tr key={req.id} className="hover:bg-gray-50 dark:hover:bg-slate-800/50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <Link to={`/profile/${req.candidateUID}`} className="text-sm font-medium text-primary hover:underline hover:text-primary-dark transition-colors">
                       {req.candidateName}
                     </Link>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-700">{req.jobTitle}</div>
+                    <div className="text-sm text-gray-700 dark:text-slate-300">{req.jobTitle}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-slate-400">
                     {req.createdAt?.toDate ? req.createdAt.toDate().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'N/A'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -108,13 +108,13 @@ const InterviewRequests: React.FC = () => {
                       <div className="flex justify-end gap-2">
                         <button 
                           onClick={() => handleStatusUpdate(req.id, 'accepted')}
-                          className="text-green-600 hover:text-green-900 bg-green-50 px-3 py-1 rounded-md transition-colors"
+                          className="text-green-600 hover:text-green-900 bg-green-50 dark:bg-green-900/20 dark:hover:bg-green-900/30 px-3 py-1 rounded-md transition-colors"
                         >
                           Accept
                         </button>
                         <button 
                           onClick={() => handleStatusUpdate(req.id, 'rejected')}
-                          className="text-red-600 hover:text-red-900 bg-red-50 px-3 py-1 rounded-md transition-colors"
+                          className="text-red-600 hover:text-red-900 bg-red-50 dark:bg-red-900/20 dark:hover:bg-red-900/30 px-3 py-1 rounded-md transition-colors"
                         >
                           Reject
                         </button>

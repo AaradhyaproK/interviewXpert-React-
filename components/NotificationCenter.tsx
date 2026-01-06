@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { collection, query, where, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../services/firebase';
 import { sendNotification } from '../services/notificationService';
@@ -106,7 +107,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ label }) => {
     <div className="relative" ref={dropdownRef}>
       <button 
         onClick={() => setShowDropdown(!showDropdown)}
-        className="relative p-2 text-gray-600 hover:text-primary transition-colors focus:outline-none flex items-center gap-2"
+        className="relative p-2 text-gray-600 dark:text-slate-400 hover:text-primary transition-colors focus:outline-none flex items-center gap-2"
       >
         {label && <span className="text-sm font-medium hidden md:block">{label}</span>}
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -120,9 +121,9 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ label }) => {
       </button>
 
       {showDropdown && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-100 z-50 overflow-hidden">
-          <div className="p-3 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-            <h3 className="font-semibold text-gray-700">Chats & Notifications</h3>
+        <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-xl border border-gray-100 dark:border-slate-800 z-50 overflow-hidden">
+          <div className="p-3 border-b border-gray-100 dark:border-slate-800 flex justify-between items-center bg-gray-50 dark:bg-black/80 backdrop-blur-sm">
+            <h3 className="font-semibold text-gray-700 dark:text-slate-200">Chats & Notifications</h3>
             {unreadCount > 0 && (
               <button onClick={markAllRead} className="text-xs text-primary hover:underline">
                 Mark all read
@@ -131,21 +132,21 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ label }) => {
           </div>
           <div className="max-h-96 overflow-y-auto">
             {notifications.length === 0 ? (
-              <div className="p-4 text-center text-gray-500 text-sm">No notifications yet</div>
+              <div className="p-4 text-center text-gray-500 dark:text-slate-400 text-sm">No notifications yet</div>
             ) : (
               notifications.map(notif => (
                 <div 
                   key={notif.id} 
-                  className={`p-3 border-b border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer ${!notif.read ? 'bg-blue-50/50' : ''}`}
+                  className={`p-3 border-b border-gray-50 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors cursor-pointer ${!notif.read ? 'bg-blue-50/50 dark:bg-blue-900/20' : ''}`}
                   onClick={() => markAsRead(notif.id)}
                 >
                   <div className="flex items-start gap-3">
                     <div className={`mt-1.5 w-2 h-2 rounded-full flex-shrink-0 ${!notif.read ? 'bg-primary' : 'bg-transparent'}`} />
                     <div>
                       {notif.senderName && (
-                        <p className="text-xs font-bold text-gray-600 mb-0.5">{notif.senderName}</p>
+                        <p className="text-xs font-bold text-gray-600 dark:text-slate-300 mb-0.5">{notif.senderName}</p>
                       )}
-                      <p className="text-sm text-gray-800">{notif.message}</p>
+                      <p className="text-sm text-gray-800 dark:text-slate-200">{notif.message}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <p className="text-xs text-gray-400">
                           {notif.createdAt?.toDate ? notif.createdAt.toDate().toLocaleDateString() : 'Just now'}
@@ -169,12 +170,12 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ label }) => {
       )}
 
       {/* Reply Modal */}
-      {replyState.isOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-4 animate-in fade-in zoom-in duration-200">
-            <h3 className="font-bold text-gray-800 mb-4">Reply to {replyState.recipientName}</h3>
+      {replyState.isOpen && createPortal(
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-modal p-4">
+          <div className="bg-white dark:bg-black/80 backdrop-blur-sm rounded-lg shadow-xl w-full max-w-md p-4 animate-in fade-in zoom-in duration-200">
+            <h3 className="font-bold text-gray-800 dark:text-white mb-4">Reply to {replyState.recipientName}</h3>
             <textarea
-              className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary mb-4 min-h-[100px]"
+              className="w-full p-3 border border-gray-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary mb-4 min-h-[100px] bg-white dark:bg-slate-950 dark:text-white dark:placeholder-slate-500"
               placeholder="Type your reply..."
               value={replyMessage}
               onChange={(e) => setReplyMessage(e.target.value)}
@@ -182,7 +183,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ label }) => {
             <div className="flex justify-end gap-2">
               <button 
                 onClick={() => setReplyState({ ...replyState, isOpen: false })}
-                className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded"
+                className="px-4 py-2 text-sm text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 rounded"
               >
                 Cancel
               </button>
@@ -191,7 +192,8 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({ label }) => {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.getElementById('portal-root') || document.body
       )}
     </div>
   );

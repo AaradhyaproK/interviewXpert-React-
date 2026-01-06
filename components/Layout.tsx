@@ -5,6 +5,8 @@ import NotificationCenter from './NotificationCenter';
 import { signOut } from 'firebase/auth';
 import { auth } from '../services/firebase';
 import { jsPDF } from 'jspdf';
+import { ThemeProvider, useTheme } from '../context/ThemeContext';
+import { Sun, Moon } from 'lucide-react';
 
 const NetworkStatus = () => {
   const [speed, setSpeed] = React.useState<number | null>(null);
@@ -39,19 +41,19 @@ const NetworkStatus = () => {
 
   if (!isOnline) return null;
 
-  let statusColor = 'text-green-600 bg-green-50 border-green-100';
+  let statusColor = 'text-green-600 bg-green-50 border-green-100 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800';
   let icon = '🟢';
   
   if (speed !== null && speed < 2) {
-    statusColor = 'text-red-600 bg-red-50 border-red-100';
+    statusColor = 'text-red-600 bg-red-50 border-red-100 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800';
     icon = '🔴';
   } else if (speed !== null && speed < 5) {
-    statusColor = 'text-yellow-600 bg-yellow-50 border-yellow-100';
+    statusColor = 'text-yellow-600 bg-yellow-50 border-yellow-100 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-800';
     icon = '🟡';
   }
 
   return (
-    <div className={`hidden md:flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${statusColor}`}>
+    <div className={`hidden md:flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border transition-colors ${statusColor}`}>
       <i className="fas fa-wifi"></i>
       <span>{speed !== null && speed < 2 ? 'Weak' : speed !== null && speed < 5 ? 'Fair' : 'Good'} {icon}</span>
       {speed && <span>{speed} Mbps</span>}
@@ -59,7 +61,7 @@ const NetworkStatus = () => {
   );
 };
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, userProfile } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -73,48 +75,57 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   };
 
+  const { isDark, toggleTheme } = useTheme();
   if (!user) return <>{children}</>;
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-800">
-      <nav className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100 transition-all">
+    <div className="min-h-screen bg-gray-50 dark:bg-transparent font-sans text-gray-800 dark:text-slate-100 transition-colors duration-300 relative">
+      {/* Tech Grid Pattern for Dark Mode */}
+      <div className="absolute inset-0 z-[-1] hidden dark:block pointer-events-none opacity-20" 
+           style={{ 
+             backgroundImage: 'radial-gradient(#64748b 1px, transparent 1px)', 
+             backgroundSize: '24px 24px' 
+           }}>
+      </div>
+
+      <nav className="bg-white/90 dark:bg-black/80 backdrop-blur-md shadow-sm sticky top-0 z-navbar border-b border-gray-100 dark:border-slate-800 transition-all">
         <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center gap-4 lg:gap-8">
               <Link to="/" className="flex-shrink-0 flex items-center gap-2">
                 <img src="https://i.ibb.co/3y9DKsB6/Yellow-and-Black-Illustrative-Education-Logo-1.png" alt="InterviewXpert Logo" className="w-14 h-14 rounded-xl object-cover" />
-                <span className="font-bold text-xl tracking-tight text-gray-900">InterviewXpert</span>
+                <span className="font-bold text-xl tracking-tight text-gray-900 dark:text-white">InterviewXpert</span>
               </Link>
               <div className="hidden md:flex items-center space-x-1">
                 {userProfile?.role === 'recruiter' ? (
                   <>
-                    <Link to="/recruiter/jobs" className={`${isActive('/recruiter/jobs') ? 'bg-blue-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
+                    <Link to="/recruiter/jobs" className={`${isActive('/recruiter/jobs') ? 'bg-blue-50 text-primary dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
                       Dashboard
                     </Link>
-                    <Link to="/recruiter/post" className={`${isActive('/recruiter/post') ? 'bg-blue-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
+                    <Link to="/recruiter/post" className={`${isActive('/recruiter/post') ? 'bg-blue-50 text-primary dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
                       Post Job
                     </Link>
-                    <Link to="/recruiter/requests" className={`${isActive('/recruiter/requests') ? 'bg-blue-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
+                    <Link to="/recruiter/requests" className={`${isActive('/recruiter/requests') ? 'bg-blue-50 text-primary dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
                       Requests
                     </Link>
                   </>
                 ) : (
                   <>
-                    <Link to="/candidate/jobs" className={`${isActive('/candidate/jobs') ? 'bg-blue-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
+                    <Link to="/candidate/jobs" className={`${isActive('/candidate/jobs') ? 'bg-blue-50 text-primary dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
                       Available Jobs
                     </Link>
-                    <Link to="/candidate/best-matches" className={`${isActive('/candidate/best-matches') ? 'bg-blue-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
+                    <Link to="/candidate/best-matches" className={`${isActive('/candidate/best-matches') ? 'bg-blue-50 text-primary dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
                       Best Matches
                     </Link>
-                    <Link to="/candidate/interviews" className={`${isActive('/candidate/interviews') ? 'bg-blue-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
+                    <Link to="/candidate/interviews" className={`${isActive('/candidate/interviews') ? 'bg-blue-50 text-primary dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
                       My Interviews
                     </Link>
-                    <Link to="/candidate/resume-analysis" className={`${isActive('/candidate/resume-analysis') ? 'bg-blue-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
+                    <Link to="/candidate/resume-analysis" className={`${isActive('/candidate/resume-analysis') ? 'bg-blue-50 text-primary dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
                       Resume Analysis
                     </Link>
-                    <Link to="/candidate/resume-builder" className={`${isActive('/candidate/resume-builder') ? 'bg-blue-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
+                    <Link to="/candidate/resume-builder" className={`${isActive('/candidate/resume-builder') ? 'bg-blue-50 text-primary dark:bg-blue-900/20 dark:text-blue-400' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white'} px-3 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap`}>
                       Resume Builder
                     </Link>
                   </>
@@ -123,32 +134,39 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
             <div className="flex items-center gap-4">
               <NetworkStatus />
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-yellow-400 transition-colors"
+                title="Toggle Theme"
+              >
+                {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
               <NotificationCenter />
               
-              <div className="relative group flex items-center gap-3 border-l border-gray-200 pl-4 ml-2">
-                <div className="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
-                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 group-hover:bg-primary group-hover:text-white transition-colors">
+              <div className="relative group flex items-center gap-3 border-l border-gray-200 dark:border-slate-700 pl-4 ml-2">
+                <div className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-slate-200 cursor-pointer">
+                  <div className="w-8 h-8 bg-gray-100 dark:bg-slate-800 rounded-full flex items-center justify-center text-gray-500 dark:text-slate-400 group-hover:bg-primary group-hover:text-white transition-colors">
                     <i className="fa-solid fa-user"></i>
                   </div>
                   <span className="hidden md:block">{userProfile?.fullname || 'Profile'}</span>
                 </div>
 
                 {/* Dropdown Menu */}
-                <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 transform group-hover:translate-y-1">
-                  <div className="p-4 flex items-center gap-4 border-b border-gray-100">
+                <div className="absolute top-full right-0 mt-2 w-80 bg-white dark:bg-black/90 backdrop-blur-md rounded-xl shadow-2xl border border-gray-100 dark:border-slate-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 transform group-hover:translate-y-1">
+                  <div className="p-4 flex items-center gap-4 border-b border-gray-100 dark:border-slate-800">
                     <img 
                       src={userProfile?.profilePhotoURL || `https://ui-avatars.com/api/?name=${userProfile?.fullname?.replace(/\s/g, '+')}&background=random&color=fff`} 
                       alt="Avatar" 
                       className="w-16 h-16 rounded-full object-cover border-2 border-primary/20"
                     />
                     <div>
-                      <div className="font-bold text-gray-800">{userProfile?.fullname}</div>
-                      <div className="text-xs text-gray-500 truncate">{userProfile?.email}</div>
-                      <div className="text-xs text-gray-500">{userProfile?.experience || 0} years of experience</div>
+                      <div className="font-bold text-gray-800 dark:text-white">{userProfile?.fullname}</div>
+                      <div className="text-xs text-gray-500 dark:text-slate-400 truncate">{userProfile?.email}</div>
+                      <div className="text-xs text-gray-500 dark:text-slate-400">{userProfile?.experience || 0} years of experience</div>
                     </div>
                   </div>
                   <div className="p-2">
-                    <Link to="/profile" className="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-50 hover:text-primary">
+                    <Link to="/profile" className="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-slate-300 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10 hover:text-primary dark:hover:text-primary">
                       <i className="fas fa-user-circle w-4 text-center"></i> View Full Profile
                     </Link>
                   </div>
@@ -169,5 +187,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     </div>
   );
 };
+
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <ThemeProvider>
+    <LayoutContent>{children}</LayoutContent>
+  </ThemeProvider>
+);
 
 export default Layout;
